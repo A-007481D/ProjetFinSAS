@@ -81,6 +81,75 @@ void ajouter_etudiant()
 }
 
 
+void afficherDetails()
+{
+    int i;
+    if (nbrEtds == 0)
+    {
+        printf("Aucun etudiant enregistre.\n");
+        return;
+    }
+    for (i = 0; i < nbrEtds; i++)
+    {
+        printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[i].numUnique, etudiant_t[i].nom, etudiant_t[i].prenom, etudiant_t[i].dateNaissance, etudiant_t[i].departement, etudiant_t[i].noteGeneral);
+    }
+}
+
+void rechercher()
+{
+    int i, choix;
+    printf("1=> Rechercher par nom\n");
+    printf("2=> Rechercher par departement\n");
+    printf("0=> Return\n");
+    printf("Saisir votre choix  : ");
+    scanf("%d", &choix);
+
+    if (choix == 1)
+    {
+        char nom[20];
+        int i;
+        printf("Entrez le nom de l'etudiant a rechercher : ");
+        scanf("%s", nom);
+        for (i = 0; i < nbrEtds; i++)
+        {
+            if (strcmp(etudiant_t[i].nom, nom) == 0)
+            {
+                printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[i].numUnique, etudiant_t[i].nom, etudiant_t[i].prenom, etudiant_t[i].dateNaissance, etudiant_t[i].departement, etudiant_t[i].noteGeneral);
+            } 
+        }
+        printf("Etudiant non trouve.\n");
+    }
+    else if (choix == 2)
+    {
+        int i, id_dept;
+        char deprt[20];
+        printf("\n1=> Informatique\n2=> Sciences\n3=> Gestion\n4=> Art et Design\n");
+        printf("Entrez le departement a rechercher : ");
+        scanf("%d", &id_dept);
+
+        if (id_dept == 1) { strcpy(deprt, "Informatique"); } 
+        else if (id_dept == 2){ strcpy(deprt, "Sciences"); } 
+        else if (id_dept == 3){ strcpy(deprt, "Gestion");} 
+        else if (id_dept == 4){ strcpy(deprt, "Art et Design");} 
+        else { 
+            return;
+            
+        }
+
+        for(i = 0; i < nbrEtds; i++)
+        {
+            if (strcmp(etudiant_t[i].departement, deprt) == 0)
+            {
+                printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[i].numUnique, etudiant_t[i].nom, etudiant_t[i].prenom, etudiant_t[i].dateNaissance, etudiant_t[i].departement, etudiant_t[i].noteGeneral);
+            }
+        }
+    }
+
+    
+}
+
+
+
 int main()
 {
     int choix;
@@ -93,8 +162,8 @@ int main()
         switch (choix)
         {
         case 1: ajouter_etudiant(); break;
-        case 2: 
-        case 3: 
+        case 2: afficherDetails(); break;
+        case 3: rechercher(); break;
         case 4: 
         case 5: 
         case 6: 
