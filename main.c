@@ -1,6 +1,11 @@
 #include<stdio.h>
 #include<string.h>
+
 #define max_etds 100
+#define note_max 20.00
+#define note_min 0.00
+#define seuil_reussite 10.00
+
 #define informatique 1
 #define sciences 2
 #define gestion 3
@@ -188,6 +193,126 @@ void modiferSupprimer()
     printf("Etudiant non trouve.\n");
 }
 
+void trierA2Z()
+{
+    int i, j;
+    // printf(" nom : %s\n", etudiant_t[0].nom);
+    // printf(" nom : %d\n", nbrEtds);
+
+    for (i = 0; i < nbrEtds - 1; i++)
+    {
+        for (j = 0; j < nbrEtds - i - 1; j++)
+        {
+            if (strcmp(etudiant_t[j].nom, etudiant_t[j + 1].nom) > 0)
+            {
+                Etudiant temp = etudiant_t[j];
+                etudiant_t[j] = etudiant_t[j + 1];
+                etudiant_t[j + 1] = temp;
+            }
+        }
+    }
+    printf("Etudiants tries par ordre alphabetique (A-Z).\n");
+    int k;
+    for (k = 0; k < nbrEtds; k++)
+    {
+        printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[k].numUnique, etudiant_t[k].nom, etudiant_t[k].prenom, etudiant_t[k].dateNaissance, etudiant_t[k].departement, etudiant_t[k].noteGeneral);
+    }
+}
+
+
+void statistiques()
+{
+
+    int i, choix, nbrReussite = 0;
+    printf("\nChoisir votre operation de statistiques : ");
+    printf("\n1=> Afficher le nombre total d'étudiants inscrits.\n2=> Afficher le nombre d'étudiants dans chaque département.\n3=> Afficher les étudiants ayant une moyenne générale supérieure à un certain seuil.\n4=> Afficher les 3 étudiants ayant les meilleures notes.\nChoisir votre operation: ");
+    scanf("%d", &choix);
+
+    if (choix == 1){
+        printf("Nombre total des etudiants inscrits : %d", nbrEtds);
+    }
+    else if (choix == 2 ) {
+        int deptEtds[4] = {0};
+        for (i = 0; i < nbrEtds; i++){
+            if(strcmp(etudiant_t[i].departement, "Informatique") == 0){
+                deptEtds[0]++;
+            }
+            else if(strcmp(etudiant_t[i].departement, "Gestion") == 0){
+                deptEtds[1]++;
+            }
+            else if (strcmp(etudiant_t[i].departement, "Sciences") == 0){
+                deptEtds[2]++;
+            }
+            else {
+                deptEtds[3]++;
+            }
+        }
+
+        printf("Le nombre des etudiants de departement Informatique : %.d\n",deptEtds[0]);
+        printf("Le nombre des etudiants de departement Gestion : %d\n",deptEtds[1]);
+        printf("Le nombre des etudiants de departement Sciences : %d\n",deptEtds[2]);
+        printf("Le nombre des etudiants de departement Art et dEsign : %d\n", deptEtds[3]);
+
+    }
+
+    else if (choix ==3){
+        float seuil;
+
+        printf("entrez la seuil : ");
+        scanf("%f", &seuil);
+        for (i = 0; i < nbrEtds; i++) {
+            if (etudiant_t[i].noteGeneral > seuil) {
+            printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[i].numUnique, etudiant_t[i].nom, etudiant_t[i].prenom, etudiant_t[i].dateNaissance, etudiant_t[i].departement, etudiant_t[i].noteGeneral);
+            }
+        }
+    }
+
+    else if (choix == 4){
+        int i, j;
+        for (i = 0; i < nbrEtds; i++)
+        {
+            for (j = 0; j < nbrEtds - i - 1; j++)
+            {
+                if (etudiant_t[j].noteGeneral < etudiant_t[j+1].noteGeneral)
+                {
+                    Etudiant temp = etudiant_t[j];
+                    etudiant_t[j] = etudiant_t[j + 1];
+                    etudiant_t[j + 1] = temp;
+                }
+            }
+        }
+
+        for (i = 0; i < 3; i++) {
+            printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[i].numUnique, etudiant_t[i].nom, etudiant_t[i].prenom, etudiant_t[i].dateNaissance, etudiant_t[i].departement, etudiant_t[i].noteGeneral);
+            }
+    }
+     
+     
+     
+     
+     
+     
+    else if(choix == 5){
+        for (i = 0; i < nbrEtds; i++)
+    {
+        if (etudiant_t[i].noteGeneral >= seuil_reussite)
+        {
+            nbrReussite++;
+        }
+    }
+    printf("Nombre d'etudiants reussi (>= %.2f) : %d\n", seuil_reussite, nbrReussite);
+
+    }
+    else {
+        printf("Retour...");
+    }
+    
+}
+
+
+
+
+
 int main()
 {
     int choix;
@@ -203,12 +328,12 @@ int main()
         case 2: afficherDetails(); break;
         case 3: rechercher(); break;
         case 4: modiferSupprimer(); break;
-        case 5: 
-        case 6: 
-        case 7: 
-        case 0: 
+        case 5: trierA2Z();break;
+        // case 6: calculerMoy(); break;
+        case 7: statistiques(); break;
+        case 0: printf("En sortie.\n");
         return 0;
-        default: 
+        default: printf("choix invalide, essayer a nouveau!\n");
         }
     } while (choix != 0);
 
