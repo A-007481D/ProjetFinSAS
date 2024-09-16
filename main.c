@@ -148,7 +148,45 @@ void rechercher()
     
 }
 
+void modiferSupprimer()
+{
+    int num, i, j, choix;
+    printf("Entrez le numero unique de l'etudiant : ");
+    scanf("%d", &num);
 
+    for(i = 0; i < nbrEtds; i++)
+    {
+        if(etudiant_t[i].numUnique == num)
+        {
+            printf("1=> Modifier l'etudiant\n");
+            printf("2=> Supprimer l'etudiant\n");
+            printf("0=> Return\n");
+            printf("Saisir votre choix  : ");
+            scanf("%d", &choix);
+            if (choix == 1)
+            {
+
+                printf("Nouveau Prenom : ");
+                scanf("%s", etudiant_t[i].prenom);
+                printf("Nouvelle Date de naissance (jour-mois-annee) : ");
+                scanf("%s", etudiant_t[i].dateNaissance);
+                return;
+            }
+            else if(choix == 2)
+            {
+
+                for(j = i; j < nbrEtds; j++)
+                {
+                    etudiant_t[j] = etudiant_t[j+1];
+                }
+                nbrEtds--;
+                printf("Etudiant supprimé avec succes.\n");
+                return;
+            }
+        }
+    }
+    printf("Etudiant non trouve.\n");
+}
 
 int main()
 {
@@ -164,7 +202,7 @@ int main()
         case 1: ajouter_etudiant(); break;
         case 2: afficherDetails(); break;
         case 3: rechercher(); break;
-        case 4: 
+        case 4: modiferSupprimer(); break;
         case 5: 
         case 6: 
         case 7: 
