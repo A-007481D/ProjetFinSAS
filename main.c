@@ -77,9 +77,9 @@ void ajouter_etudiant()
     departement(etudiant_t[nbrEtds].departement);
     do
     {
-        printf("Note Generale entre 0 et 20: ");
+        printf("Note Generale entre (%2.f et %2.f): ", note_min, note_max);
         scanf("%f", &etudiant_t[nbrEtds].noteGeneral);
-    } while (etudiant_t[nbrEtds].noteGeneral < 0 || etudiant_t[nbrEtds].noteGeneral > 20);
+    } while (etudiant_t[nbrEtds].noteGeneral < note_min || etudiant_t[nbrEtds].noteGeneral > note_max);
 
     printf("Etudiant '%s' a ete ajoute avec succes nbr (%d).\n", etudiant_t[nbrEtds].nom, nbrEtds);
     nbrEtds++;
@@ -287,7 +287,7 @@ void statistiques()
             }
     }
      
-     
+
      
      
      
@@ -310,7 +310,41 @@ void statistiques()
 }
 
 
+void calculerMoy()
+{   
+    float deptMoy[4] = {0};
+    int deptEtds[4] = {0};
+    int i;
+    float somme = 0;
 
+    for (i = 0; i < nbrEtds; i++){
+        if(strcmp(etudiant_t[i].departement, "Informatique") == 0){
+            deptMoy[0] += etudiant_t[i].noteGeneral;
+            deptEtds[0]++;
+        }
+        else if(strcmp(etudiant_t[i].departement, "Gestion") == 0){
+            deptMoy[1] += etudiant_t[i].noteGeneral;
+            deptEtds[1]++;
+        }
+        else if (strcmp(etudiant_t[i].departement, "Sciences") == 0){
+            deptMoy[2] += etudiant_t[i].noteGeneral;
+            deptEtds[2]++;
+        }
+        else {
+            deptMoy[3] += etudiant_t[i].noteGeneral;
+            deptEtds[3]++;
+        }
+
+    
+        somme += etudiant_t[i].noteGeneral;
+    }
+    
+    printf("Le moyen de departement Informatique : %.2f\n", deptMoy[0] / deptEtds[0]);
+    printf("Le moyen de departement Gestion : %.2f\n", deptMoy[1] / deptEtds[1]);
+    printf("Le moyen de departement Sciences : %.2f\n", deptMoy[2] / deptEtds[2]);
+    printf("Le moyen de departement Art et dEsign : %.2f\n", deptMoy[3] / deptEtds[3]);
+    printf("La moyenne generale des etudiants est : %.2f\n", somme / nbrEtds);
+}
 
 
 int main()
@@ -329,7 +363,7 @@ int main()
         case 3: rechercher(); break;
         case 4: modiferSupprimer(); break;
         case 5: trierA2Z();break;
-        // case 6: calculerMoy(); break;
+        case 6: calculerMoy(); break;
         case 7: statistiques(); break;
         case 0: printf("En sortie.\n");
         return 0;
