@@ -220,6 +220,75 @@ void trierA2Z()
 }
 
 
+void trierZ2A()
+{
+    int i, j;
+
+    for(i = 0; i < nbrEtds - 1; i++){
+        for(j = 0; j < nbrEtds - i - 1; j++){
+            if(strcmp(etudiant_t[j].nom, etudiant_t[j + 1].nom) < 0)
+            {
+                Etudiant temp = etudiant_t[j];
+                etudiant_t[j] = etudiant_t[j + 1];
+                etudiant_t[j + 1] = temp;    
+            }
+        }
+    }
+    printf("Etudiants tries par ordre alphabetique (Z-A).\n");
+    int k;
+    for (k = 0; k < nbrEtds; k++)
+    {
+        printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[k].numUnique, etudiant_t[k].nom, etudiant_t[k].prenom, etudiant_t[k].dateNaissance, etudiant_t[k].departement, etudiant_t[k].noteGeneral);
+    }
+
+}
+
+void trierStatus()
+{
+    int i, k;
+    printf("\nEtudiants Admis.\n");
+    for (i = 0; i < 3; i++)
+    {
+        if (etudiant_t[i].noteGeneral >= seuil_reussite)
+        {
+            printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[i].numUnique, etudiant_t[i].nom, etudiant_t[i].prenom, etudiant_t[i].dateNaissance, etudiant_t[i].departement, etudiant_t[i].noteGeneral);
+        }
+    }
+
+    printf("\nEtudiants non Admis.\n");
+    for (k = 0; k < nbrEtds; k++)
+    {
+        if (etudiant_t[k].noteGeneral <= seuil_reussite)
+        {
+            printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[k].numUnique, etudiant_t[k].nom, etudiant_t[k].prenom, etudiant_t[k].dateNaissance, etudiant_t[k].departement, etudiant_t[k].noteGeneral);
+        }
+    }
+}
+
+void trierMoyGen()
+{
+    int i, j, k;
+    for (i = 0; i < nbrEtds; i++)
+    {
+        for (j = 0; j < nbrEtds - i - 1; j++)
+        {
+            if (etudiant_t[j].noteGeneral > etudiant_t[j+1].noteGeneral)
+            {
+                Etudiant temp = etudiant_t[j];
+                etudiant_t[j] = etudiant_t[j + 1];
+                etudiant_t[j + 1] = temp;
+            }
+        }
+    }
+    printf("\nEtudiants tries par moyenne generale.\n");
+    for (k = 0; k < nbrEtds; k++)
+    {
+        printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[k].numUnique, etudiant_t[k].nom, etudiant_t[k].prenom, etudiant_t[k].dateNaissance, etudiant_t[k].departement, etudiant_t[k].noteGeneral);
+    }
+
+}
+
+
 void statistiques()
 {
 
@@ -339,13 +408,32 @@ void calculerMoy()
         somme += etudiant_t[i].noteGeneral;
     }
     
-    printf("Le moyen de departement Informatique : %.2f\n", deptMoy[0] / deptEtds[0]);
-    printf("Le moyen de departement Gestion : %.2f\n", deptMoy[1] / deptEtds[1]);
-    printf("Le moyen de departement Sciences : %.2f\n", deptMoy[2] / deptEtds[2]);
-    printf("Le moyen de departement Art et dEsign : %.2f\n", deptMoy[3] / deptEtds[3]);
+    printf("La moyenne de departement Informatique : %.2f\n", deptMoy[0] / deptEtds[0]);
+    printf("La moyenne de departement Gestion : %.2f\n", deptMoy[1] / deptEtds[1]);
+    printf("La moyenne de departement Sciences : %.2f\n", deptMoy[2] / deptEtds[2]);
+    printf("La moyenne de departement Art et dEsign : %.2f\n", deptMoy[3] / deptEtds[3]);
     printf("La moyenne generale des etudiants est : %.2f\n", somme / nbrEtds);
 }
 
+
+void triOps()
+{
+    int choix;
+    printf("\n+=============================================================+");
+    printf("\n|       --------Menu Des operations du Triage ---------       |");
+    printf("\n+=============================================================+\n");
+    printf("\nChoisir votre operation de triage : ");
+    printf("\n1=> Trier par ordre alphabetique(A -> Z)\n2=> Trier par ordre alphabetique(Z -> A)\n3=> Trier par moyenne generale(du plus élevé au plus faible.)\n4=> Tri par statut de réussite (>= 10/20)\n0=> Retour au menu principal\nChoisir votre operation: ");
+    scanf("%d", &choix);
+    switch (choix)
+    {
+    case 1: trierA2Z(); break;
+    case 2: trierZ2A(); break;
+    case 3: trierMoyGen(); break;
+    case 4: trierStatus(); break;
+    default: printf("retour au menu...");
+    }
+}
 
 int main()
 {
@@ -353,7 +441,7 @@ int main()
 
     do
     {
-
+        afficher_menu();
         printf("Entrez votre choix : ");
         scanf("%d", &choix);
         switch (choix)
@@ -362,7 +450,7 @@ int main()
         case 2: afficherDetails(); break;
         case 3: rechercher(); break;
         case 4: modiferSupprimer(); break;
-        case 5: trierA2Z();break;
+        case 5: triOps();break;
         case 6: calculerMoy(); break;
         case 7: statistiques(); break;
         case 0: printf("En sortie.\n");
