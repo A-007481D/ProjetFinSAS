@@ -22,6 +22,7 @@ typedef struct
 } Etudiant;
 
 Etudiant etudiant_t[max_etds];
+
 int nbrEtds = 0;
 
 void afficher_menu()
@@ -29,14 +30,14 @@ void afficher_menu()
     printf("\n+=============================================================+");
     printf("\n|              ---------Menu Principal------------             |");
     printf("\n+=============================================================+\n");
-    printf(" 1=> Ajouter un etudiant                                       |\n");
-    printf(" 2=> Afficher les details d'un etudiant                        |\n");
-    printf(" 3=> Rechercher un etudiant                                    |\n");
-    printf(" 4=> Modifier ou supprimer un etudiant                         |\n");
-    printf(" 5=> Trier les etudiants                                       |\n");
-    printf(" 6=> Calculer la moyenne generale                              |\n");
-    printf(" 7=> Statistiques                                              |\n");
-    printf(" 0=> Quitter                                                   |\n");
+    printf(" 1️⃣ => Ajouter un etudiant                                       |\n");
+    printf(" 2️⃣ => Afficher les details d'un etudiant                        |\n");
+    printf(" 3️⃣ => Rechercher un etudiant                                    |\n");
+    printf(" 4️⃣ => Modifier ou supprimer un etudiant                         |\n");
+    printf(" 5️⃣ => Trier les etudiants                                       |\n");
+    printf(" 6️⃣ => Calculer la moyenne generale                              |\n");
+    printf(" 7️⃣ => Statistiques                                              |\n");
+    printf(" 0️⃣ => Quitter                                                   |\n");
     printf("+=============================================================+\n");
 }
 
@@ -63,6 +64,11 @@ int departement(char depart[])
 
 void ajouter_etudiant()
 {
+    if (nbrEtds >= max_etds) 
+    {
+    printf("Limite maximale des etudiants atteinte.\n");
+    return;
+    }
 
     printf("Entrer les informations de l'etudiant:\n");
     printf("Numero unique : ");
@@ -81,31 +87,43 @@ void ajouter_etudiant()
         scanf("%f", &etudiant_t[nbrEtds].noteGeneral);
     } while (etudiant_t[nbrEtds].noteGeneral < note_min || etudiant_t[nbrEtds].noteGeneral > note_max);
 
-    printf("Etudiant '%s' a ete ajoute avec succes nbr (%d).\n", etudiant_t[nbrEtds].nom, nbrEtds);
+    printf("Etudiant '%s' a ete ajoute avec succes #%d.\n", etudiant_t[nbrEtds].nom, nbrEtds + 1);
     nbrEtds++;
 }
 
 
 void afficherDetails()
 {
-    int i;
     if (nbrEtds == 0)
     {
         printf("Aucun etudiant enregistre.\n");
         return;
     }
-    for (i = 0; i < nbrEtds; i++)
+
+    printf("+-------+------------------+------------------+-------------------+------------------+\n");
+    printf("|  ID   |       Nom        |     Prenom       |  Date Naissance   |   Departement    |\n");
+    printf("+-------+------------------+------------------+-------------------+------------------+\n");
+
+    for (int i = 0; i < nbrEtds; i++)
     {
-        printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[i].numUnique, etudiant_t[i].nom, etudiant_t[i].prenom, etudiant_t[i].dateNaissance, etudiant_t[i].departement, etudiant_t[i].noteGeneral);
+        printf("| %5d | %-16s | %-16s | %-17s | %-16s |\n", 
+            etudiant_t[i].numUnique, 
+            etudiant_t[i].nom, 
+            etudiant_t[i].prenom, 
+            etudiant_t[i].dateNaissance, 
+            etudiant_t[i].departement);
     }
+
+    printf("+-------+------------------+------------------+-------------------+------------------+\n");
 }
+
 
 void rechercher()
 {
     int i, choix;
-    printf("1=> Rechercher par nom\n");
-    printf("2=> Rechercher par departement\n");
-    printf("0=> Return\n");
+    printf("1️⃣ => Rechercher par nom\n");
+    printf("2️⃣ => Rechercher par departement\n");
+    printf("0️⃣ => Return\n");
     printf("Saisir votre choix  : ");
     scanf("%d", &choix);
 
@@ -163,9 +181,9 @@ void modiferSupprimer()
     {
         if(etudiant_t[i].numUnique == num)
         {
-            printf("1=> Modifier l'etudiant\n");
-            printf("2=> Supprimer l'etudiant\n");
-            printf("0=> Return\n");
+            printf("1️⃣ => Modifier l'etudiant\n");
+            printf("2️⃣ => Supprimer l'etudiant\n");
+            printf("0️⃣ => Return\n");
             printf("Saisir votre choix  : ");
             scanf("%d", &choix);
             if (choix == 1)
@@ -294,7 +312,7 @@ void statistiques()
 
     int i, choix, nbrReussite = 0;
     printf("\nChoisir votre operation de statistiques : ");
-    printf("\n1=> Afficher le nombre total d'étudiants inscrits.\n2=> Afficher le nombre d'étudiants dans chaque département.\n3=> Afficher les étudiants ayant une moyenne générale supérieure à un certain seuil.\n4=> Afficher les 3 étudiants ayant les meilleures notes.\nChoisir votre operation: ");
+    printf("\n1️⃣ => Afficher le nombre total d'étudiants inscrits.\n2️⃣ => Afficher le nombre d'étudiants dans chaque département.\n3️⃣ => Afficher les étudiants ayant une moyenne générale supérieure à un certain seuil.\n4️⃣ => Afficher les 3 étudiants ayant les meilleures notes.\nChoisir votre operation: ");
     scanf("%d", &choix);
 
     if (choix == 1){
