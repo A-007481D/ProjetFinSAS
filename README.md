@@ -16,7 +16,7 @@ L'application a pour objectif de gérer les étudiants inscrits dans une univers
 
 ## Installation
 
-1. Cloner le repository :
+1. Cloner le Répertoire :
    ```bash
    git clone https://github.com/A-007481D/ProjetFinSAS.git
 2. Naviguer vers le Répertoire du Projet :
