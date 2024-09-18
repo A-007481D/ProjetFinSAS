@@ -33,7 +33,7 @@ L'application a pour objectif de gérer les étudiants inscrits dans une univers
   ## Utilisation
 1. Exécuter l'Application :
    ```bash
-   ./gestion_pharmacie
+   ./gestion_etudiants
 
 2. Suivre les instructions à l'écran pour interagir avec l'application.
 
