@@ -21,9 +21,19 @@ typedef struct
     float noteGeneral;
 } Etudiant;
 
-Etudiant etudiant_t[max_etds];
+Etudiant etudiant_t[max_etds] = {
+    {11, "Labid", "Abdelmalek", "25/11/2000", "Gestion", 16.22},
+    {12, "Lmerrakchi", "Hamza", "25/11/2010", "Sciences", 15.21},
+    {13, "Youness", "MrToken", "25/11/2006", "Art et Design", 11.65},
+    {14, "Mokhtar", "hafid", "25/11/2001", "Gestion", 10.22} ,
+    {15, "Boutaib", "Anass", "12/12/2004", "Informatique", 20.78},
+    {16, "Yamal", "Lamine", "12/12/2006", "Sciences", 9.99},
+    {17, "Eddarkaoui", "Oussama", "04/12/2005", "Informatique", 14.33},
+    {18, "Taoudi", "Ahmed", "11/22/2001", "Gestion", 12.32}
 
-int nbrEtds = 0;
+};
+
+int nbrEtds = 8;
 
 void afficher_menu()
 {
@@ -121,9 +131,11 @@ void afficherDetails()
 void rechercher()
 {
     int i, choix;
-    printf("1️⃣ => Rechercher par nom\n");
-    printf("2️⃣ => Rechercher par departement\n");
-    printf("0️⃣ => Return\n");
+        printf("\n+=============================================================+");
+        printf("\n|              --------- Recherche ----------                 |");
+        printf("\n+=============================================================+\n");
+        printf("\n1️⃣ => Recherche par nom\n2️⃣ => Recherche par departement\n3️⃣ => Retour\n");
+        printf("\n+=============================================================+\n");
     printf("Saisir votre choix  : ");
     scanf("%d", &choix);
 
@@ -137,7 +149,20 @@ void rechercher()
         {
             if (strcmp(etudiant_t[i].nom, nom) == 0)
             {
-                printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[i].numUnique, etudiant_t[i].nom, etudiant_t[i].prenom, etudiant_t[i].dateNaissance, etudiant_t[i].departement, etudiant_t[i].noteGeneral);
+                printf("+-------+------------------+------------------+-------------------+------------------+\n");
+                printf("|  ID   |       Nom        |     Prenom       |  Date Naissance   |   Departement    |\n");
+                printf("+-------+------------------+------------------+-------------------+------------------+\n");
+    {
+                printf("| %5d | %-16s | %-16s | %-17s | %-16s |\n", 
+                etudiant_t[i].numUnique, 
+                etudiant_t[i].nom, 
+                etudiant_t[i].prenom, 
+                etudiant_t[i].dateNaissance, 
+                etudiant_t[i].departement);
+    }
+
+                printf("+-------+------------------+------------------+-------------------+------------------+\n");
+                // printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[i].numUnique, etudiant_t[i].nom, etudiant_t[i].prenom, etudiant_t[i].dateNaissance, etudiant_t[i].departement, etudiant_t[i].noteGeneral);
             } 
         }
         printf("Etudiant non trouve.\n");
@@ -146,7 +171,12 @@ void rechercher()
     {
         int i, id_dept;
         char deprt[20];
-        printf("\n1=> Informatique\n2=> Sciences\n3=> Gestion\n4=> Art et Design\n");
+        printf("\n+=============================================================+");
+        printf("\n|              ---------Departement----------                 |");
+        printf("\n+=============================================================+\n");
+        printf("\n1️⃣ => Informatique\n2️⃣ => Sciences\n3️⃣ => Gestion\n4️⃣ => Art et Design\n");
+        printf("\n+=============================================================+\n");
+    
         printf("Entrez le departement a rechercher : ");
         scanf("%d", &id_dept);
 
@@ -163,7 +193,20 @@ void rechercher()
         {
             if (strcmp(etudiant_t[i].departement, deprt) == 0)
             {
-                printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[i].numUnique, etudiant_t[i].nom, etudiant_t[i].prenom, etudiant_t[i].dateNaissance, etudiant_t[i].departement, etudiant_t[i].noteGeneral);
+                printf("+-------+------------------+------------------+-------------------+------------------+\n");
+                printf("|  ID   |       Nom        |     Prenom       |  Date Naissance   |   Departement    |\n");
+                printf("+-------+------------------+------------------+-------------------+------------------+\n");
+    {
+                printf("| %5d | %-16s | %-16s | %-17s | %-16s |\n", 
+                etudiant_t[i].numUnique, 
+                etudiant_t[i].nom, 
+                etudiant_t[i].prenom,               //fix wrong display later
+                etudiant_t[i].dateNaissance, 
+                etudiant_t[i].departement);
+    }
+
+                printf("+-------+------------------+------------------+-------------------+------------------+\n");
+                // printf("\nNumero unique: %d | Nom: %s | Prenom: %s | Date de naissance: %s | Departement: %s | Note generale: %.2f\n", etudiant_t[i].numUnique, etudiant_t[i].nom, etudiant_t[i].prenom, etudiant_t[i].dateNaissance, etudiant_t[i].departement, etudiant_t[i].noteGeneral);
             }
         }
     }
